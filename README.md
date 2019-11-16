@@ -45,10 +45,10 @@ pipenv sync
 
 ### 実行
 
-Wordcloudの画像を生成するpythonスクリプトを実行します。
-以下のコマンドを実行することで画像を生成できます。
+Wordcloudの画像を生成できるflask serverを起動するpythonスクリプトを実行します。
+以下のコマンドを実行することでサーバーが起動します。
 
 ```sh
-pipenv run python generate_image_from_wordcloud.py
+pipenv run python server.py
 ```
 
