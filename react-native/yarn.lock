@@ -5220,6 +5220,11 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.9.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
   integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
 
+react-native-audio@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-audio/-/react-native-audio-4.3.0.tgz#fae22b81f6a4dda706fd4837d0c6a89c66cf2e7e"
+  integrity sha512-QQYq28eSJy+y/Ukvry0AkbwMVELAj+LcEwCVRH+7sKLqlnoBBxGd4ilhgJHjwOiC70192LueGbjXJjPPEwW3iA==
+
 react-native@0.61.4:
   version "0.61.4"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.61.4.tgz#9ec6e8a2aa8eac57143dcfa39115c7d9a139bc2c"
