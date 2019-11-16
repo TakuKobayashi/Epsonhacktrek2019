@@ -10,7 +10,8 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, ScrollView, View, Text, StatusBar, Button, Alert, PermissionsAndroid } from 'react-native';
 
 import { Header, LearnMoreLinks, Colors, DebugInstructions, ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
-import { AudioRecorder, AudioUtils } from 'react-native-audio';
+import Voice from 'react-native-voice';
+//import { AudioRecorder, AudioUtils } from 'react-native-audio';
 
 export default class App extends React.Component {
   //コンストラクタ
@@ -130,7 +131,16 @@ export default class App extends React.Component {
     if (!isAgree) {
       return false;
     }
-
+    Voice.onSpeechStart = (event) => {
+      console.log(event);
+    };
+    Voice.onSpeechEnd = (event) => {
+      console.log(event);
+    };
+    Voice.onSpeechResults = (event) => {
+      console.log(event);
+    };
+    /*
     const audioPath = AudioUtils.DocumentDirectoryPath + '/test.aac';
 
     const prepareResult = await AudioRecorder.prepareRecordingAtPath(audioPath, {
@@ -144,6 +154,7 @@ export default class App extends React.Component {
     const audioProgress = (AudioRecorder.onProgress = (data) => {
       console.log(data);
     });
+ */
     return true;
   }
 
@@ -158,10 +169,14 @@ export default class App extends React.Component {
     console.log('press');
     if (this.state.isRecording) {
       this.setState({ isRecording: false });
-      return await AudioRecorder.stopRecording();
+      const result = await Voice.start('ja-JP');
+      console.log(result);
+      //return await AudioRecorder.stopRecording();
     } else {
       this.setState({ isRecording: true });
-      return await AudioRecorder.startRecording();
+      const result = await Voice.stop();
+      console.log(result);
+      //return await AudioRecorder.startRecording();
     }
   }
 }
