@@ -9,6 +9,7 @@ verify_ssl = true
 wordcloud = "*"
 mecab-python3 = "*"
 matplotlib = "*"
+Flask = "*"
 
 [requires]
 python_version = "3.7"
