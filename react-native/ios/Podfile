@@ -34,11 +34,8 @@ target 'epsonhacktrek2019' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  pod 'RNAudio', :path => '../node_modules/react-native-audio'
 
-  pod 'react-native-voice', :path => '../node_modules/react-native-voice'
 
-  pod 'RNAudioRecorderPlayer', :path => '../node_modules/react-native-audio-recorder-player'
 
   target 'epsonhacktrek2019Tests' do
     inherit! :search_paths
