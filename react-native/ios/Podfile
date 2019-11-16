@@ -37,6 +37,8 @@ target 'epsonhacktrek2019' do
 
 
 
+  pod 'RNAudioRecord', :path => '../node_modules/react-native-audio-record'
+
   target 'epsonhacktrek2019Tests' do
     inherit! :search_paths
     # Pods for testing
