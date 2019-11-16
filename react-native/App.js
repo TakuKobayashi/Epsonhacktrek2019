@@ -7,12 +7,22 @@
  */
 
 import React from 'react';
-import { SafeAreaView, StyleSheet, ScrollView, View, Text, StatusBar, Button, Alert } from 'react-native';
+import { SafeAreaView, StyleSheet, ScrollView, View, Text, StatusBar, Button, Alert, PermissionsAndroid } from 'react-native';
 
 import { Header, LearnMoreLinks, Colors, DebugInstructions, ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
 import { AudioRecorder, AudioUtils } from 'react-native-audio';
 
 export default class App extends React.Component {
+  //コンストラクタ
+  constructor(props) {
+    super(props); //必ず呼ぶ
+    this.state = {
+      isRecording: false,
+      isRecordPermissionGranted: false,
+    };
+    this.setupRecrording();
+  }
+
   styles = StyleSheet.create({
     scrollView: {
       backgroundColor: Colors.lighter,
@@ -89,12 +99,69 @@ export default class App extends React.Component {
               </View>
               <LearnMoreLinks />
             </View>
-            <Button title="Press me" onPress={() => Alert.alert('Simple Button pressed')} />
+            <Button title="Press me" onPress={() => this.switchRecording()} />
           </ScrollView>
         </SafeAreaView>
       </>
     );
   }
 
-  switchRecording() {}
+  async checkRecordPermissionRoutine() {
+    const isAuthorized = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO);
+    console.log(isAuthorized);
+    if (isAuthorized) {
+      return true;
+    } else {
+      const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO);
+      console.log(granted);
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log('You can use the camera');
+        return true;
+      } else {
+        console.log('Camera permission denied');
+        return false;
+      }
+    }
+  }
+
+  async setupRecrording() {
+    const isAgree = await this.checkRecordPermissionRoutine();
+    this.setState({ isRecordPermissionGranted: isAgree });
+    if (!isAgree) {
+      return false;
+    }
+
+    const audioPath = AudioUtils.DocumentDirectoryPath + '/test.aac';
+
+    const prepareResult = await AudioRecorder.prepareRecordingAtPath(audioPath, {
+      SampleRate: 22050,
+      Channels: 1,
+      AudioQuality: 'Low',
+      AudioEncoding: 'aac',
+    });
+    console.log(prepareResult);
+
+    const audioProgress = (AudioRecorder.onProgress = (data) => {
+      console.log(data);
+    });
+    return true;
+  }
+
+  async switchRecording() {
+    if (!this.state.isRecordPermissionGranted) {
+      const isSetupSuccess = await this.setupRecrording();
+      if (!isSetupSuccess) {
+        Alert.alert('まずは録音できるようにしようか?');
+        return false;
+      }
+    }
+    console.log('press');
+    if (this.state.isRecording) {
+      this.setState({ isRecording: false });
+      return await AudioRecorder.stopRecording();
+    } else {
+      this.setState({ isRecording: true });
+      return await AudioRecorder.startRecording();
+    }
+  }
 }
