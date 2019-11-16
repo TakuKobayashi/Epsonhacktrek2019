@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="jp">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <title>{{ title }}</title>
+  </head>
+  <body>
+    <div class="container">
+      <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
+        <div class="panel panel-info" >
+        <form action="/generate" method="post" >
+          <div class="form-group">
+            <textarea class="form-control" rows="15" id="sentence" name="sentence" placeholder="適当な文章を入力してください"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">画像作成</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
