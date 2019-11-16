@@ -10,8 +10,7 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, ScrollView, View, Text, StatusBar, Button, Alert, PermissionsAndroid } from 'react-native';
 
 import { Header, LearnMoreLinks, Colors, DebugInstructions, ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
-import Voice from 'react-native-voice';
-//import { AudioRecorder, AudioUtils } from 'react-native-audio';
+import AudioRecord from 'react-native-audio-record';
 
 export default class App extends React.Component {
   //コンストラクタ
@@ -131,30 +130,13 @@ export default class App extends React.Component {
     if (!isAgree) {
       return false;
     }
-    Voice.onSpeechStart = (event) => {
-      console.log(event);
-    };
-    Voice.onSpeechEnd = (event) => {
-      console.log(event);
-    };
-    Voice.onSpeechResults = (event) => {
-      console.log(event);
-    };
-    /*
-    const audioPath = AudioUtils.DocumentDirectoryPath + '/test.aac';
 
-    const prepareResult = await AudioRecorder.prepareRecordingAtPath(audioPath, {
-      SampleRate: 22050,
-      Channels: 1,
-      AudioQuality: 'Low',
-      AudioEncoding: 'aac',
-    });
-    console.log(prepareResult);
-
-    const audioProgress = (AudioRecorder.onProgress = (data) => {
-      console.log(data);
-    });
- */
+    const options = {
+      channels: 1,
+      audioSource: 6,
+    };
+    const result = AudioRecord.init(options);
+    console.log(result)
     return true;
   }
 
@@ -168,15 +150,18 @@ export default class App extends React.Component {
     }
     console.log('press');
     if (this.state.isRecording) {
+      const result = await AudioRecord.stop();
       this.setState({ isRecording: false });
-      const result = await Voice.start('ja-JP');
       console.log(result);
-      //return await AudioRecorder.stopRecording();
     } else {
+      const result = await AudioRecord.start();
       this.setState({ isRecording: true });
-      const result = await Voice.stop();
+      AudioRecord.on('data', (data) => {
+        // base64-encoded audio data chunks
+        console.log(data);
+      });
       console.log(result);
-      //return await AudioRecorder.startRecording();
+
     }
   }
 }
