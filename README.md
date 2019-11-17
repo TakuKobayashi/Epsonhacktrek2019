@@ -29,6 +29,28 @@ brew install mecab mecab-ipadic
 
 Mecabがインストールできたら実行します。
 
+### Mecab Neologdのインストール
+
+Mecab Neologdのダウンロード
+
+```
+git clone https://github.com/neologd/mecab-ipadic-neologd.git
+```
+
+ダウンロードしたRootディレクトリに移動
+
+```
+cd mecab-ipadic-neologd
+```
+
+辞書をインストール
+
+```sh
+./bin/install-mecab-ipadic-neologd -n
+```
+
+これでMecab Neologdの辞書がダウンロードされて利用できるようになります。
+
 ### 各種インストール
 
 これで諸々インストールします。
