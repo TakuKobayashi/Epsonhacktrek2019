@@ -42,12 +42,11 @@ export default class App extends React.Component {
 
     ws.onopen = () => {
       // connection opened
-      ws.send('something'); // send a message
+      console.log("open");
     };
 
     ws.onmessage = (e) => {
       // a message was received
-      console.log("receive");
       console.log(e.data);
     };
 
