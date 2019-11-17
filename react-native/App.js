@@ -25,6 +25,32 @@ export default class App extends React.Component {
       resultImageUrl: null,
     };
     this.setupRecrording();
+    this.setupWebsocket();
+  }
+
+  setupWebsocket(){
+    const ws = new WebSocket('wss://websocketserversample.au-syd.mybluemix.net/');
+
+    ws.onopen = () => {
+      // connection opened
+      ws.send('something'); // send a message
+    };
+
+    ws.onmessage = (e) => {
+      // a message was received
+      console.log(e.data);
+    };
+
+    ws.onerror = (e) => {
+      // an error occurred
+      console.log(e.message);
+    };
+
+    ws.onclose = (e) => {
+      // connection closed
+      console.log(e.code, e.reason);
+    };
+    this.websocket = ws;
   }
 
   styles = StyleSheet.create({
