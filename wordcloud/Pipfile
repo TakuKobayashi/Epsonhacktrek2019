@@ -10,6 +10,8 @@ wordcloud = "*"
 mecab-python3 = "*"
 matplotlib = "*"
 Flask = "*"
+gevent = "*"
+gevent-websocket = "*"
 
 [requires]
 python_version = "3.7"
