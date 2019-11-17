@@ -26,10 +26,14 @@ export default class App extends React.Component {
     };
     this.setupRecrording();
     this.setupWebsocket();
+
+    this.setupWebsocket = this.setupWebsocket.bind(this);
   }
 
   setupWebsocket(){
-    const ws = new WebSocket('wss://websocketserversample.au-syd.mybluemix.net/');
+    const self = this;
+    const BASE_URL = 'wss://189f6480.ngrok.io'
+    const ws = new WebSocket(BASE_URL + '/pipe');
 
     ws.onopen = () => {
       // connection opened
@@ -38,6 +42,7 @@ export default class App extends React.Component {
 
     ws.onmessage = (e) => {
       // a message was received
+      console.log("receive");
       console.log(e.data);
     };
 
@@ -51,6 +56,10 @@ export default class App extends React.Component {
       console.log(e.code, e.reason);
     };
     this.websocket = ws;
+  }
+
+  sendWebsocket(){
+    this.websocket.send("aaaa")
   }
 
   styles = StyleSheet.create({
@@ -107,6 +116,7 @@ export default class App extends React.Component {
                 <Text style={this.styles.sectionDescription}>{this.state.scanedText}</Text>
               </View>
               <View style={{alignItems: 'center'}}>
+                <AwesomeButtonRick width={200} type="secondary" onPress={() => this.sendWebsocket() } >テスト送信</AwesomeButtonRick>
                 <AwesomeButtonRick width={200} type="secondary" onPress={() => this.switchRecording()} >録音開始</AwesomeButtonRick>
                 <AwesomeButtonRick width={200} type="primary" onPress={() => this.sendRecordedSentence()} >送信</AwesomeButtonRick>
               </View>
@@ -167,11 +177,9 @@ export default class App extends React.Component {
         return false;
       }
     }
-    console.log('press');
     if (this.state.isRecording) {
       const result = await AudioRecord.stop();
       this.setState({ isRecording: false });
-      console.log(result);
     } else {
       const result = await AudioRecord.start();
       this.setState({ isRecording: true });
@@ -179,8 +187,6 @@ export default class App extends React.Component {
         // base64-encoded audio data chunks
         console.log(data);
       });
-      console.log(result);
-
     }
   }
 }

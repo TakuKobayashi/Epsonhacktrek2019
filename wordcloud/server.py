@@ -4,6 +4,9 @@ from flask import Flask, render_template, request, jsonify, send_file
 from wordcloud import WordCloud
 import uuid
 import MeCab
+from gevent import pywsgi
+from geventwebsocket.handler import WebSocketHandler
+import json
 
 app = Flask(__name__)
 
@@ -34,5 +37,21 @@ def tmp_images(path):
     fullpath = "./images/tmp/" + path
     return send_file(fullpath, mimetype='image/png')
 
+@app.route('/pipe')
+def pipe():
+    if request.environ.get('wsgi.websocket'):
+        ws = request.environ['wsgi.websocket']
+
+        while True:
+            message = ws.receive()
+            if message is None:
+                break
+            print(message)
+            ws.send(json.dumps({message: message}))
+
 if __name__ == "__main__":
-  app.run(debug=True, host='0.0.0.0', threaded=True)
+  app.debug = True
+  app.host = '0.0.0.0'
+  app.threaded = True
+  server = pywsgi.WSGIServer(("", 5000), app, handler_class=WebSocketHandler)
+  server.serve_forever()
