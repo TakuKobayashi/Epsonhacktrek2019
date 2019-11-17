@@ -8,7 +8,7 @@
 
 import React from 'react';
 import axios from 'axios';
-import { SafeAreaView, StyleSheet, ScrollView, View, Text, StatusBar, Image, Alert, PermissionsAndroid } from 'react-native';
+import { SafeAreaView, StyleSheet, ScrollView, View, Text, StatusBar, Image, Alert, PermissionsAndroid, TextInput } from 'react-native';
 
 import { Header, LearnMoreLinks, Colors, DebugInstructions, ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
 import AudioRecord from 'react-native-audio-record';
@@ -28,6 +28,11 @@ export default class App extends React.Component {
     this.setupWebsocket();
 
     this.setupWebsocket = this.setupWebsocket.bind(this);
+    this.onInputChangeText = this.onInputChangeText.bind(this);
+  }
+
+  onInputChangeText(text){
+    this.setState({scanedText: text})
   }
 
   setupWebsocket(){
@@ -113,7 +118,7 @@ export default class App extends React.Component {
           <ScrollView contentInsetAdjustmentBehavior="automatic" style={this.styles.scrollView}>
             <View style={this.styles.body}>
               <View style={this.styles.sectionContainer}>
-                <Text style={this.styles.sectionDescription}>{this.state.scanedText}</Text>
+                <TextInput onChangeText={this.onInputChangeText} style={this.styles.sectionDescription} defaultValue={this.state.scanedText} editable />
               </View>
               <View style={{alignItems: 'center'}}>
                 <AwesomeButtonRick width={200} type="secondary" onPress={() => this.sendWebsocket() } >テスト送信</AwesomeButtonRick>
