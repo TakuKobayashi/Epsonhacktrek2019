@@ -1,6 +1,6 @@
 # coding:utf-8
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify, send_file
 from wordcloud import WordCloud
 import uuid
 import MeCab
@@ -25,9 +25,14 @@ def generate():
                  stopwords={"もの","これ","ため","それ","ところ","よう"},
                  font_path="/System/Library/Fonts/ヒラギノ角ゴシック W6.ttc")
   wc.generate(" ".join(s))
-  image_file_name = str(uuid.uuid4()) + ".png"
-  wc.to_file(image_file_name)
-  return render_template('index.html', title=sentence, image=image_file_name)
+  image_file_path = "images/tmp/" + str(uuid.uuid4()) + ".png"
+  wc.to_file(image_file_path)
+  return jsonify({'image_url': request.url_root + image_file_path})
+
+@app.route("/images/tmp/<path:path>")
+def tmp_images(path):
+    fullpath = "./images/tmp/" + path
+    return send_file(fullpath, mimetype='image/png')
 
 if __name__ == "__main__":
   app.run(debug=True, host='0.0.0.0', threaded=True)
