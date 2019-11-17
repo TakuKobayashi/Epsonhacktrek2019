@@ -121,7 +121,6 @@ export default class App extends React.Component {
                 <TextInput onChangeText={this.onInputChangeText} style={this.styles.sectionDescription} defaultValue={this.state.scanedText} editable />
               </View>
               <View style={{alignItems: 'center'}}>
-                <AwesomeButtonRick width={200} type="secondary" onPress={() => this.sendWebsocket() } >テスト送信</AwesomeButtonRick>
                 <AwesomeButtonRick width={200} type="secondary" onPress={() => this.switchRecording()} >録音開始</AwesomeButtonRick>
                 <AwesomeButtonRick width={200} type="primary" onPress={() => this.sendRecordedSentence()} >送信</AwesomeButtonRick>
               </View>
