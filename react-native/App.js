@@ -36,7 +36,6 @@ export default class App extends React.Component {
   }
 
   setupWebsocket(){
-    const self = this;
     const BASE_URL = 'wss://189f6480.ngrok.io'
     const ws = new WebSocket(BASE_URL + '/pipe');
 
@@ -186,9 +185,11 @@ export default class App extends React.Component {
     } else {
       const result = await AudioRecord.start();
       this.setState({ isRecording: true });
+      const websocket = this.websocket;
       AudioRecord.on('data', (data) => {
         // base64-encoded audio data chunks
         console.log(data);
+        websocket.send(data);
       });
     }
   }
