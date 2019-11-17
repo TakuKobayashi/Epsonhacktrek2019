@@ -11,6 +11,7 @@ import { SafeAreaView, StyleSheet, ScrollView, View, Text, StatusBar, Button, Al
 
 import { Header, LearnMoreLinks, Colors, DebugInstructions, ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
 import AudioRecord from 'react-native-audio-record';
+import AwesomeButtonRick from "react-native-really-awesome-button/src/themes/rick";
 
 export default class App extends React.Component {
   //コンストラクタ
@@ -19,6 +20,7 @@ export default class App extends React.Component {
     this.state = {
       isRecording: false,
       isRecordPermissionGranted: false,
+      scanedText: 'じゃああの開会式動画編集すればいいだけなのでじゃあちょっとプロジェクトの振り返りということでちょっと今日は1日考えてみましょうかねなんだか前にちょっとね振り返りやりましょうねトイレットペーパー入らない可能性がありますね ウォシュレットあと面白かったのは英語でしゃべって文モーニングモーニング出てこないじゃん出てこないねこれ出てきた形の形の形の形がやってるで待ってますねこれぐらいこれぐらいかなお疲れ様ですか会いしましょうねばーれっとぺーぱー',
     };
     this.setupRecrording();
   }
@@ -37,6 +39,10 @@ export default class App extends React.Component {
     sectionContainer: {
       marginTop: 32,
       paddingHorizontal: 24,
+    },
+    buttonsContainer: {
+      flex: 1,
+      justifyContent: 'space-between',
     },
     sectionTitle: {
       fontSize: 24,
@@ -68,38 +74,15 @@ export default class App extends React.Component {
         <StatusBar barStyle="dark-content" />
         <SafeAreaView>
           <ScrollView contentInsetAdjustmentBehavior="automatic" style={this.styles.scrollView}>
-            <Header />
-            {global.HermesInternal == null ? null : (
-              <View style={this.styles.engine}>
-                <Text style={this.styles.footer}>Engine: Hermes</Text>
-              </View>
-            )}
             <View style={this.styles.body}>
               <View style={this.styles.sectionContainer}>
-                <Text style={this.styles.sectionTitle}>Step One</Text>
-                <Text style={this.styles.sectionDescription}>
-                  Edit <Text style={this.styles.highlight}>App.js</Text> to change this screen and then come back to see your edits.
-                </Text>
+                <Text style={this.styles.sectionDescription}>{this.state.scanedText}</Text>
               </View>
-              <View style={this.styles.sectionContainer}>
-                <Text style={this.styles.sectionTitle}>See Your Changes</Text>
-                <Text style={this.styles.sectionDescription}>
-                  <ReloadInstructions />
-                </Text>
+              <View style={{alignItems: 'center'}}>
+                <AwesomeButtonRick width={200} type="secondary" onPress={() => this.switchRecording()} >録音開始</AwesomeButtonRick>
+                <AwesomeButtonRick width={200} type="primary" onPress={() => this.switchRecording()} >送信</AwesomeButtonRick>
               </View>
-              <View style={this.styles.sectionContainer}>
-                <Text style={this.styles.sectionTitle}>Debug</Text>
-                <Text style={this.styles.sectionDescription}>
-                  <DebugInstructions />
-                </Text>
-              </View>
-              <View style={this.styles.sectionContainer}>
-                <Text style={this.styles.sectionTitle}>Learn More</Text>
-                <Text style={this.styles.sectionDescription}>Read the docs to discover what to do next:</Text>
-              </View>
-              <LearnMoreLinks />
             </View>
-            <Button title="Press me" onPress={() => this.switchRecording()} />
           </ScrollView>
         </SafeAreaView>
       </>
