@@ -36,8 +36,7 @@ export default class App extends React.Component {
   }
 
   setupWebsocket(){
-    const BASE_URL = 'wss://e7b163f1.ngrok.io'
-//    const BASE_URL = 'wss://189f6480.ngrok.io'
+    const BASE_URL = 'wss://189f6480.ngrok.io'
     const ws = new WebSocket(BASE_URL + '/pipe');
 
     ws.onopen = () => {
@@ -133,8 +132,7 @@ export default class App extends React.Component {
   async sendRecordedSentence(){
     const formdata = new FormData();
     formdata.append("sentence", this.state.scanedText)
-    const BASE_URL = 'https://e7b163f1.ngrok.io'
-    //const BASE_URL = 'https://189f6480.ngrok.io'
+    const BASE_URL = 'https://189f6480.ngrok.io'
     const response = await axios.post(BASE_URL + '/generate', formdata);
     console.log(response.data.image_url);
   }

@@ -12,6 +12,8 @@ matplotlib = "*"
 Flask = "*"
 gevent = "*"
 gevent-websocket = "*"
+python-dotenv = "*"
+google-cloud-speech = "*"
 
 [requires]
 python_version = "3.7"
