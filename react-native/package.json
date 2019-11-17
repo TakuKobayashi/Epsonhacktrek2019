@@ -11,9 +11,12 @@
     "format": "prettier --config .prettierrc --write '**/*.{ts,js}'"
   },
   "dependencies": {
+    "axios": "^0.19.0",
     "react": "16.9.0",
     "react-native": "0.61.4",
-    "react-native-audio-record": "^0.2.2"
+    "react-native-audio-record": "^0.2.2",
+    "react-native-elements": "^1.2.7",
+    "react-native-really-awesome-button": "^1.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
