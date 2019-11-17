@@ -7,7 +7,8 @@
  */
 
 import React from 'react';
-import { SafeAreaView, StyleSheet, ScrollView, View, Text, StatusBar, Button, Alert, PermissionsAndroid } from 'react-native';
+import axios from 'axios';
+import { SafeAreaView, StyleSheet, ScrollView, View, Text, StatusBar, Image, Alert, PermissionsAndroid } from 'react-native';
 
 import { Header, LearnMoreLinks, Colors, DebugInstructions, ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
 import AudioRecord from 'react-native-audio-record';
@@ -21,6 +22,7 @@ export default class App extends React.Component {
       isRecording: false,
       isRecordPermissionGranted: false,
       scanedText: 'じゃああの開会式動画編集すればいいだけなのでじゃあちょっとプロジェクトの振り返りということでちょっと今日は1日考えてみましょうかねなんだか前にちょっとね振り返りやりましょうねトイレットペーパー入らない可能性がありますね ウォシュレットあと面白かったのは英語でしゃべって文モーニングモーニング出てこないじゃん出てこないねこれ出てきた形の形の形の形がやってるで待ってますねこれぐらいこれぐらいかなお疲れ様ですか会いしましょうねばーれっとぺーぱー',
+      resultImageUrl: null,
     };
     this.setupRecrording();
   }
@@ -80,13 +82,21 @@ export default class App extends React.Component {
               </View>
               <View style={{alignItems: 'center'}}>
                 <AwesomeButtonRick width={200} type="secondary" onPress={() => this.switchRecording()} >録音開始</AwesomeButtonRick>
-                <AwesomeButtonRick width={200} type="primary" onPress={() => this.switchRecording()} >送信</AwesomeButtonRick>
+                <AwesomeButtonRick width={200} type="primary" onPress={() => this.sendRecordedSentence()} >送信</AwesomeButtonRick>
               </View>
             </View>
           </ScrollView>
         </SafeAreaView>
       </>
     );
+  }
+
+  async sendRecordedSentence(){
+    const formdata = new FormData();
+    formdata.append("sentence", this.state.scanedText)
+    const BASE_URL = 'https://189f6480.ngrok.io'
+    const response = await axios.post(BASE_URL + '/generate', formdata);
+    console.log(response.data.image_url);
   }
 
   async checkRecordPermissionRoutine() {
